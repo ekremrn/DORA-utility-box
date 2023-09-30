@@ -8,6 +8,7 @@ from argparse import ArgumentParser
 from pymongo.server_api import ServerApi
 from pymongo.mongo_client import MongoClient
 
+
 load_dotenv()
 
 DATABASE_URI = str(os.getenv("DATABASE_URI"))
@@ -28,9 +29,8 @@ process = tqdm(
     DATA, desc="Extracting...", ncols=100, colour="green"
 )
 for row in process:
-    if PRODUCTS_COLLECTION.find_one({"_id": row.get("_id")}):
-        continue
+    # if not PRODUCTS_COLLECTION.find_one({"_id": row.get("_id")}):
     PRODUCTS_COLLECTION.insert_one(row)
-
+    
 
 CLIENT.close()
