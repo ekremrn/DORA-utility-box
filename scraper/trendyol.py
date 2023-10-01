@@ -26,6 +26,7 @@ COLLECTION = DB[COLLECTION_NAME]
 
 parser = ArgumentParser()
 parser.add_argument("-c", "--categories", nargs="+", default=["kadın"])
+parser.add_argument("-p", "--page_limit", type=int, default=5)
 opt = parser.parse_args()
 
 soup = get_soup("https://www.trendyol.com/")
@@ -34,7 +35,7 @@ category_links = extract_category_links(soup, opt.categories)
 # Category Link Collect Process
 page_urls = list()
 for category_link in category_links:
-    page_urls.extend(generate_pagination_urls(category_link))
+    page_urls.extend(generate_pagination_urls(category_link, page_limit=opt.page_limit))
 
 
 progress = tqdm(page_urls, desc="trendyol", ncols=100, colour="green")
